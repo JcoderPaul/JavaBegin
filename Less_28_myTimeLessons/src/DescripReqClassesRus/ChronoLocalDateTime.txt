@@ -1,0 +1,105 @@
+******* Interface ChronoLocalDateTime *******
+
+Параметры типа: D - конкретный тип даты, вызываемого объекта даты-времени
+Интерфейсы предки (Superinterfaces):
+Comparable<ChronoLocalDateTime<?>>, Temporal, TemporalAccessor, TemporalAdjuster
+Все известные реализующие классы: LocalDateTime
+
+public interface ChronoLocalDateTime<D extends ChronoLocalDate> extends Temporal,
+                                                                        TemporalAdjuster,
+                                                                        Comparable<ChronoLocalDateTime<?>>
+
+Дата-время без часового пояса в произвольной хронологии, предназначенная для расширенных
+вариантов использования глобального времени. Большинство приложений должны объявлять
+сигнатуры методов, поля и переменные как LocalDateTime, а не этот интерфейс.
+
+ChronoLocalDateTime — это абстрактное представление локальной даты и времени, где хронология
+Chronology или календарная система является подключаемой. Дата-время определяется в терминах
+полей, выраженных TemporalField, где наиболее распространенные реализации определены в
+ChronoField. Хронология определяет, как работает календарная система и значение стандартных полей.
+
+Когда использовать этот интерфейс:
+Дизайн API поощряет использование LocalDateTime, а не этого интерфейса, даже в том случае, когда
+приложению необходимо работать с несколькими системами календаря. Обоснование этого подробно
+рассматривается в ChronoLocalDate. Перед использованием этого интерфейса необходимо убедиться,
+что обсуждение в ChronoLocalDate прочитано и понято.
+
+Требования разработчиков к реализации:
+Этот интерфейс должен быть реализован с осторожностью, чтобы обеспечить правильную работу других
+классов. Все реализации, которые могут быть созданы, должны быть окончательными, неизменяемыми и
+потокобезопасными. Подклассы должны быть Serializable везде, где это возможно.
+
+******* МЕТОДЫ *******
+
+- default Temporal	adjustInto(Temporal temporal) - Настраивает указанный временной объект так,
+  чтобы он имел те же дату и время, что и вызывающий объект.
+
+- ChronoZonedDateTime<D> atZone(ZoneId zone) - Объединяет это время с часовым поясом для создания
+  ChronoZonedDateTime.
+
+- default int compareTo(ChronoLocalDateTime<?> other) - Сравнивает эту дату-время с другой
+  датой-временем, включая хронологию.
+
+- boolean equals(Object obj) - Проверяет, совпадает ли эта дата-время с другой датой-временем,
+  включая хронологию.
+
+- default String format(DateTimeFormatter formatter) - Форматирует эту дату-время, используя
+  указанный модуль форматирования.
+
+- static ChronoLocalDateTime<?>	from(TemporalAccessor temporal) - Получает экземпляр
+  ChronoLocalDateTime из временного объекта.
+
+- default Chronology getChronology() - Получает хронологию этой даты и времени.
+
+- int hashCode() - Хэш-код для этой даты и времени.
+
+- default boolean isAfter(ChronoLocalDateTime<?> other) - Проверяет, является ли эта дата-время
+  после указанной даты-времени, игнорируя хронологию.
+
+- default boolean isBefore(ChronoLocalDateTime<?> other) - Проверяет, предшествует ли эта
+  дата-время указанной дате-времени, игнорируя хронологию.
+
+- default boolean isEqual(ChronoLocalDateTime<?> other) - Проверяет, соответствует ли эта
+  дата-время указанной дате-времени, игнорируя хронологию.
+
+- boolean isSupported(TemporalField field) - Проверяет, поддерживается ли указанное поле.
+
+- default boolean isSupported(TemporalUnit unit) - Проверяет, поддерживается ли указанный модуль.
+
+- default ChronoLocalDateTime<D> minus(long amountToSubtract, TemporalUnit unit) - Возвращает объект
+  того же типа, что и вызывающий объект, за вычетом указанного периода.
+
+- default ChronoLocalDateTime<D> minus(TemporalAmount amount) - Возвращает объект того же типа,
+  что и вызывающий объект, с вычтенной суммой.
+
+- ChronoLocalDateTime<D> plus(long amountToAdd, TemporalUnit unit) - Возвращает объект того же
+  типа, что и вызывающий объект, с добавлением указанного периода.
+
+- default ChronoLocalDateTime<D> plus(TemporalAmount amount) - Возвращает объект того же типа,
+  что и вызывающий объект, с добавленной суммой.
+
+- default <R> R	query(TemporalQuery<R> query) - Запрашивает эту дату и время, используя указанный запрос.
+
+- static Comparator<ChronoLocalDateTime<?>>	timeLineOrder() - Получает компаратор, который сравнивает
+  ChronoLocalDateTime в порядке временной шкалы, игнорируя хронологию.
+
+- default long toEpochSecond(ZoneOffset offset) - Преобразует эту дату-время в количество секунд из
+  эпохи 1970-01-01T00:00:00Z.
+
+- default Instant toInstant(ZoneOffset offset) - Преобразует эту дату-время в Instant.
+
+- D	toLocalDate() - Получает локальную часть даты этой даты и времени.
+
+- LocalTime toLocalTime() - Получает часть местного времени этой даты и времени.
+
+- String toString() - Выводит эту дату-время в виде строки.
+
+- default ChronoLocalDateTime<D> with(TemporalAdjuster adjuster) - Возвращает
+  скорректированный объект того же типа, что и вызывающий объект, с внесенными корректировками.
+
+- ChronoLocalDateTime<D> with(TemporalField field, long newValue) - Возвращает объект того
+  же типа, что и вызывающий объект, но с измененным указанным полем.
+
+-------------------------------------------------------------------------------------------------
+Более подробно см. https://docs.oracle.com/javase/8/docs/api/java/time/chrono/ChronoLocalDateTime.html
+-------------------------------------------------------------------------------------------------

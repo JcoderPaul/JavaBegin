@@ -1,0 +1,276 @@
+******* Класс LocalDateTime *******
+
+public final class LocalDateTime extends Object
+                                 implements Temporal,
+                                            TemporalAdjuster,
+                                            ChronoLocalDateTime<LocalDate>,
+                                            Serializable
+
+Дата и время без часового пояса в календарной системе ISO-8601, выглядит так,
+например 2007-12-03T10:15:30.
+
+LocalDateTime — это неизменяемый объект даты и времени, представляющий дату и
+время, часто рассматриваемый как год-месяц-день-час-минута-секунда. Также можно
+получить доступ к другим полям даты и времени, таким как день года, день недели
+и неделя года. Время представлено с точностью до наносекунды.
+
+Например, значение «2 октября 2007 г., 13:45.30.123456789» можно сохранить в LocalDateTime.
+
+Этот класс не хранит и не представляет часовой пояс. Вместо этого имеется описание даты,
+в сочетании с местным временем. Он не может представлять мгновение на временной шкале без
+дополнительной информации, такой как смещение или часовой пояс.
+
+Календарная система ISO-8601 — это современная гражданская календарная система, используемая
+сегодня в большинстве стран мира. Это эквивалентно пролептической системе григорианского
+календаря, в которой сегодняшние правила для високосных лет применяются на все времена.
+Для большинства приложений, написанных сегодня, полностью подходят правила ISO-8601. Однако
+любое приложение, использующее исторические даты и требующее их точности, сочтет подход
+ISO-8601 непригодным.
+
+Этот класс является неизменяемым и потокобезопасным.
+
+******* МЕТОДЫ LocalDateTime *******
+
+- Temporal adjustInto(Temporal temporal) - Настраивает указанный временной объект так,
+  чтобы он имел те же дату и время, что и текущий объект.
+
+- OffsetDateTime atOffset(ZoneOffset offset) - Объединяет текущую дату и время со смещением
+  для создания OffsetDateTime.
+
+- ZonedDateTime atZone(ZoneId zone) - Объединяет эту дату и время с часовым поясом для
+  создания ZonedDateTime.
+
+- int compareTo(ChronoLocalDateTime<?> other) - Сравнивает эту дату-время с другой датой-временем.
+
+- boolean equals(Object obj) - Проверяет, равна ли текущая дата-время другой дате-времени.
+
+- String format(DateTimeFormatter formatter) - Форматирует эту дату-время, используя указанный
+  модуль форматирования.
+
+- static LocalDateTime from(TemporalAccessor temporal) - Получает экземпляр LocalDateTime из
+  временного объекта.
+
+- int get(TemporalField field) - Получает значение указанного поля из этой даты и времени в
+  виде целого числа.
+
+- int getDayOfMonth() - Получает поле (значение) дня месяца.
+
+- DayOfWeek getDayOfWeek() - Получает поле (значение) дня недели, которое является
+  перечислением DayOfWeek.
+
+- int getDayOfYear() - Получает поле (значение) дня года.
+
+- int getHour() - Получает поле (значение) часов дня.
+
+- long getLong(TemporalField field) - Получает значение указанного поля из этой даты и
+  времени как long.
+
+- int getMinute() - Получает поле (значение) минут часа.
+
+- Month getMonth() - Получает поле (значение) месяца года, используя перечисление Month.
+
+- int getMonthValue() - Получает поле (значение) месяца года от 1 до 12.
+
+- int getNano() - Получает поле (значение) наносекунд.
+
+- int getSecond() - Получает поле (значение) секунды минуты.
+
+- int getYear() - Получает поле (значение) года.
+
+- int hashCode() - Хэш-код для этой даты и времени.
+
+- boolean isAfter(ChronoLocalDateTime<?> other) - Проверяет, является ли текущая дата-время после
+  указанной даты-времени.
+
+- boolean isBefore(ChronoLocalDateTime<?> other) - Проверяет, предшествует ли текущая дата-время
+  указанной дате-времени.
+
+- boolean isEqual(ChronoLocalDateTime<?> other) - Проверяет, соответствует ли текущая дата-время
+  указанной дате-времени.
+
+- boolean isSupported(TemporalField field) - Проверяет, поддерживается ли указанное поле (значение).
+
+- boolean isSupported(TemporalUnit unit) - Проверяет, поддерживается ли указанный модуль.
+
+- LocalDateTime minus(long amountToSubtract, TemporalUnit unit) - Возвращает копию этой даты
+  и времени с вычитанием указанной суммы.
+
+- LocalDateTime minus(TemporalAmount amountToSubtract) - Возвращает копию этой даты и времени
+  с вычитанием указанной суммы.
+
+- LocalDateTime minusDays(long days) - Возвращает копию вызывающего метод LocalDateTime с указанным
+  вычтенным количеством дней.
+
+- LocalDateTime minusHours(long hours) - Возвращает копию вызывающего метод LocalDateTime с указанным
+  вычтенным количеством часов.
+
+- LocalDateTime minusMinutes(long minutes) - Возвращает копию вызывающего метод LocalDateTime с
+  указанным вычтенным количеством минут.
+
+- LocalDateTime minusMonths(long months) - Возвращает копию вызывающего метод LocalDateTime с
+  вычитанием указанного количества месяцев.
+
+- LocalDateTime minusNanos(long nanos) - Возвращает копию вызывающего метод LocalDateTime с
+  вычитанием указанного количества наносекунд.
+
+- LocalDateTime minusSeconds(long seconds) - Возвращает копию вызывающего метод LocalDateTime
+  с вычитанием указанного количества секунд.
+
+- LocalDateTime minusWeeks(long weeks) - Возвращает копию вызывающего метод LocalDateTime с
+  вычитанием указанного количества недель.
+
+- LocalDateTime minusYears(long years) - Возвращает копию вызывающего метод LocalDateTime с
+  указанным вычтенным количеством лет.
+
+- static LocalDateTime now() - Получает текущую дату и время по системным
+  часам в часовом поясе по умолчанию.
+
+- static LocalDateTime now(Clock clock) - Получает текущую дату и время из
+  указанных часов.
+
+- static LocalDateTime now(ZoneId zone) - Получает текущую дату и время по
+  системным часам в указанном часовом поясе.
+
+- static LocalDateTime of(int year,
+                          int month,
+                          int dayOfMonth,
+                          int hour,
+                          int minute) - Получает экземпляр LocalDateTime из года, месяца,
+  дня, часа и минуты, устанавливая секунды и наносекунды равными нулю.
+
+- static LocalDateTime of(int year,
+                          int month,
+                          int dayOfMonth,
+                          int hour,
+                          int minute,
+                          int second) - Получает экземпляр LocalDateTime из года, месяца,
+  дня, часа, минуты и секунды, устанавливая значение наносекунды равным нулю.
+
+- static LocalDateTime of(int year,
+                          int month,
+                          int dayOfMonth,
+                          int hour,
+                          int minute,
+                          int second,
+                          int nanoOfSecond) - Получает экземпляр LocalDateTime из года,
+  месяца, дня, часа, минуты, секунды и наносекунды.
+
+- static LocalDateTime of(int year,
+                          Month month,
+                          int dayOfMonth,
+                          int hour,
+                          int minute) - Получает экземпляр LocalDateTime из года,
+  месяца, дня, часа и минуты, устанавливая секунды и наносекунды равными нулю.
+
+- static LocalDateTime of(int year,
+                          Month month,
+                          int dayOfMonth,
+                          int hour,
+                          int minute,
+                          int second) - Получает экземпляр LocalDateTime из года,
+  месяца, дня, часа, минуты и секунды, устанавливая значение наносекунды равным нулю.
+
+- static LocalDateTime of(int year,
+                          Month month,
+                          int dayOfMonth,
+                          int hour,
+                          int minute,
+                          int second,
+                          int nanoOfSecond) - Получает экземпляр LocalDateTime из
+  года, месяца, дня, часа, минуты, секунды и наносекунды.
+
+- static LocalDateTime of(LocalDate date,
+                          LocalTime time) - Получает экземпляр LocalDateTime из даты и времени.
+
+- static LocalDateTime ofEpochSecond(long epochSecond,
+                                     int nanoOfSecond,
+                                     ZoneOffset offset) - Получает экземпляр LocalDateTime,
+  используя секунды из эпохи 1970-01-01T00:00:00Z.
+
+- static LocalDateTime ofInstant(Instant instant, ZoneId zone) - Получает экземпляр LocalDateTime
+  из идентификатора Instant и зоны.
+
+- static LocalDateTime parse(CharSequence text) - Получает экземпляр LocalDateTime из текстовой
+  строки, например 2007-12-03T10:15:30.
+
+- static LocalDateTime parse(CharSequence text, DateTimeFormatter formatter) - Получает экземпляр
+  LocalDateTime из текстовой строки, используя определенный модуль форматирования.
+
+- LocalDateTime	plus(long amountToAdd, TemporalUnit unit) - Возвращает копию этой даты и времени
+  с добавленной указанной суммой.
+
+- LocalDateTime	plus(TemporalAmount amountToAdd) - Возвращает копию этой даты и времени с
+  добавленной указанной суммой.
+
+- LocalDateTime	plusDays(long days) - Возвращает копию вызывающего объекта LocalDateTime с
+  указанным количеством добавленных дней.
+
+- LocalDateTime	plusHours(long hours) - Возвращает копию вызывающего объекта LocalDateTime
+  с указанным количеством добавленных часов.
+
+- LocalDateTime	plusMinutes(long minutes) - Возвращает копию вызывающего объекта LocalDateTime
+  с указанным количеством добавленных минут.
+
+- LocalDateTime	plusMonths(long months) - Возвращает копию вызывающего объекта LocalDateTime
+  с указанным количеством добавленных месяцев.
+
+- LocalDateTime	plusNanos(long nanos) - Возвращает копию вызывающего объекта LocalDateTime
+  с указанным количеством добавленных наносекунд.
+
+- LocalDateTime	plusSeconds(long seconds) - Возвращает копию вызывающего объекта LocalDateTime
+  с указанным количеством добавленных секунд.
+
+- LocalDateTime	plusWeeks(long weeks) - Возвращает копию вызывающего объекта LocalDateTime
+  с указанным количеством добавленных недель.
+
+- LocalDateTime	plusYears(long years) - Возвращает копию вызывающего объекта LocalDateTime
+  с указанным количеством добавленных лет.
+
+- <R> R	query(TemporalQuery<R> query) - Запрашивает эту дату и время, используя указанный запрос.
+
+- ValueRange range(TemporalField field) - Получает диапазон допустимых значений для указанного поля.
+
+- LocalDate	toLocalDate() - Получает часть LocalDate этой даты и времени.
+
+- LocalTime	toLocalTime() - Получает часть LocalTime этой даты и времени.
+
+- String toString() - Выводит дату-время в виде строки, например 2007-12-03T10:15:30.
+
+- LocalDateTime	truncatedTo(TemporalUnit unit) - Возвращает копию вызывающего объекта LocalDateTime
+  с усеченным временем.
+
+- long until(Temporal endExclusive, TemporalUnit unit) - Вычисляет количество времени до другой
+  даты-времени с точки зрения указанной единицы.
+
+- LocalDateTime	with(TemporalAdjuster adjuster) - Возвращает скорректированную копию этой даты и времени.
+
+- LocalDateTime	with(TemporalField field, long newValue) - Возвращает копию этой даты и времени с указанным
+  полем, установленным на новое значение.
+
+- LocalDateTime	withDayOfMonth(int dayOfMonth) - Возвращает копию вызывающего объекта LocalDateTime
+  с измененным днем месяца.
+
+- LocalDateTime	withDayOfYear(int dayOfYear) - Возвращает копию вызывающего объекта LocalDateTime
+  с измененным днем года.
+
+- LocalDateTime	withHour(int hour) - Возвращает копию вызывающего объекта LocalDateTime
+  с измененным часом дня.
+
+- LocalDateTime	withMinute(int minute) - Возвращает копию вызывающего объекта LocalDateTime
+  с измененными минутами часа.
+
+- LocalDateTime	withMonth(int month) - Возвращает копию вызывающего объекта LocalDateTime
+  с измененным месяцем года.
+
+- LocalDateTime	withNano(int nanoOfSecond) - Возвращает копию вызывающего объекта LocalDateTime
+  с измененным значением наносекунды.
+
+- LocalDateTime	withSecond(int second) - Возвращает копию вызывающего объекта LocalDateTime
+  с измененной секундой минуты.
+
+- LocalDateTime	withYear(int year) - Возвращает копию вызывающего объекта LocalDateTime
+  с измененным годом.
+
+--------------------------------------------------------------------------------------------------------
+Более подробно см. https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html
+--------------------------------------------------------------------------------------------------------

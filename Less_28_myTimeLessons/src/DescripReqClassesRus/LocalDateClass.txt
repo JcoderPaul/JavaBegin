@@ -1,0 +1,219 @@
+******* Class LocalDate - Класс LocalDate *******
+
+public final class LocalDate extends Object
+                             implements Temporal,
+                                        TemporalAdjuster,
+                                        ChronoLocalDate,
+                                        Serializable
+
+
+LocalDate — это неизменяемый объект даты и времени, который представляет дату,
+часто рассматриваемую как год-месяц-день. Дата без часового пояса в календарной
+системе ISO-8601, например 2007-12-03.
+
+Другие поля даты, такие как день года, день недели и неделя года, также могут быть
+доступны. Например, значение «2 октября 2007 г.» может быть сохранено в LocalDate.
+
+Этот класс не хранит и не представляет время или часовой пояс. Это описание даты.
+Он не может представлять мгновение на временной шкале без дополнительной информации,
+такой как смещение или часовой пояс.
+
+Календарная система ISO-8601 — это современная гражданская календарная система,
+используемая сегодня в большинстве стран мира. Она эквивалентно пролептической
+системе григорианского календаря, в которой сегодняшние правила для високосных
+лет применяются на все времена. Для большинства приложений, написанных сегодня,
+полностью подходят правила ISO-8601. Однако любое приложение, использующее
+исторические даты и требующее их точности, сочтет подход ISO-8601 непригодным.
+
+Объекты LocalDate следует сравнивать используя метод equals.
+Этот класс является неизменяемым и потокобезопасным.
+
+******* МЕТОДЫ *******
+
+- Temporal adjustInto(Temporal temporal) - Настраивает указанный временной
+  объект так, чтобы он имел ту же дату, что и этот объект.
+
+- LocalDateTime atStartOfDay() - Объединяет эту дату со временем полуночи,
+  чтобы создать LocalDateTime в начале этой даты.
+
+- ZonedDateTime atStartOfDay(ZoneId zone) - Возвращает зонированную
+  дату-время из этой даты в самое раннее допустимое время в соответствии
+  с правилами в часовом поясе.
+
+- LocalDateTime atTime(int hour, int minute) - Объединяет эту дату
+  со временем для создания LocalDateTime.
+
+- LocalDateTime atTime(int hour, int minute, int second) - Объединяет
+  эту дату со временем для создания LocalDateTime.
+
+- LocalDateTime atTime(int hour, int minute, int second, int nanoOfSecond) -
+  Объединяет эту дату со временем для создания LocalDateTime.
+
+- LocalDateTime atTime(LocalTime time) - Объединяет эту дату со временем
+  для создания LocalDateTime.
+
+- OffsetDateTime atTime(OffsetTime time) - Объединяет эту дату со временем
+  смещения для создания OffsetDateTime.
+
+- int compareTo(ChronoLocalDate other) - Сравнивает эту дату с другой датой.
+
+- boolean equals(Object obj) - Проверяет, равна ли эта дата другой дате.
+
+- String format(DateTimeFormatter formatter) - Форматирует эту дату,
+  используя указанный модуль форматирования.
+
+- static LocalDate from(TemporalAccessor temporal) - Получает экземпляр
+  LocalDate из временного объекта.
+
+- int get(TemporalField field) - Получает значение указанного поля с этой
+  даты в виде целого числа.
+
+- IsoChronology getChronology() - Получает хронологию этой даты, которая
+  представляет собой календарную систему ISO.
+
+- int getDayOfMonth() - Получает поле дня месяца.
+
+- DayOfWeek getDayOfWeek() - Получает поле дня недели, которое
+  является перечислением DayOfWeek.
+
+- int getDayOfYear() - Получает поле дня года.
+
+- Era getEra() - Получает эру, применимую на эту дату.
+
+- long getLong(TemporalField field) - Получает значение указанного
+  поля с этой даты как long.
+
+- Month getMonth() - Получает поле месяца года, используя перечисление Month.
+
+- int getMonthValue() - Получает поле месяца года от 1 до 12.
+
+- int getYear() - Получает поле года.
+
+- int hashCode() - Хэш-код для этой даты.
+
+- boolean isAfter(ChronoLocalDate other) - Проверяет, является ли эта
+  дата более поздней, чем указанная дата.
+
+- boolean isBefore(ChronoLocalDate other) - Проверяет, предшествует ли
+  эта дата указанной дате.
+
+- boolean isEqual(ChronoLocalDate other) - Проверяет, равна ли эта дата
+  указанной дате.
+
+- boolean isLeapYear() - Проверяет, является ли год високосным в
+  соответствии с правилами пролептической календарной системы ISO.
+
+- boolean isSupported(TemporalField field) - Проверяет, поддерживается
+  ли указанное поле.
+
+- boolean isSupported(TemporalUnit unit) - Проверяет, поддерживается
+  ли указанный модуль.
+
+- int lengthOfMonth() - Возвращает продолжительность месяца,
+  представленного этой датой.
+
+- int lengthOfYear() - Возвращает продолжительность года,
+  представленного этой датой.
+
+- LocalDate minus(long amountToSubtract, TemporalUnit unit) - Возвращает
+  копию этой даты с вычитанием указанной суммы.
+
+- LocalDate minus(TemporalAmount amountToSubtract) - Возвращает копию
+  этой даты с вычитанием указанной суммы.
+
+- LocalDate minusDays(long daysToSubtract) - Возвращает копию текущего объекта
+  LocalDate с указанным вычтенным количеством дней.
+
+- LocalDate minusMonths(long monthsToSubtract) - Возвращает копию текущего объекта
+  LocalDate с вычитанием указанного количества месяцев.
+
+- LocalDate minusWeeks(long weeksToSubtract) - Возвращает копию текущего объекта
+  LocalDate с вычитанием указанного количества недель.
+
+- LocalDate minusYears(long yearsToSubtract) - Возвращает копию текущего объекта
+  LocalDate с указанным вычтенным количеством лет.
+
+- static LocalDate now() - Получает текущую дату по системным
+  часам в часовом поясе по умолчанию.
+
+- static LocalDate now(Clock clock) - Получает текущую дату
+  из указанных часов.
+
+- static LocalDate now(ZoneId zone) - Получает текущую дату
+  по системным часам в указанном часовом поясе.
+
+- static LocalDate of(int year, int month, int dayOfMonth) -
+  Получает экземпляр LocalDate из года, месяца и дня.
+
+- static LocalDate of(int year, Month month, int dayOfMonth) -
+  Получает экземпляр LocalDate из года, месяца и дня.
+
+- static LocalDate ofEpochDay(long epochDay) - Получает экземпляр
+  LocalDate из числа дней эпохи.
+
+- static LocalDate ofYearDay(int year, int dayOfYear) - Получает
+  экземпляр LocalDate из года и дня года.
+
+- static LocalDate parse(CharSequence text) - Получает экземпляр
+  LocalDate из текстовой строки, например 2007-12-03.
+
+- static LocalDate parse(CharSequence text, DateTimeFormatter formatter) -
+  Получает экземпляр LocalDate из текстовой строки, используя определенный
+  модуль форматирования.
+
+- LocalDate plus(long amountToAdd, TemporalUnit unit) - Возвращает копию
+  этой даты с добавленной указанной суммой.
+
+- LocalDate plus(TemporalAmount amountToAdd) - Возвращает копию этой даты
+  с добавленной указанной суммой.
+
+- LocalDate plusDays(long daysToAdd) - Возвращает копию вызывающего объекта LocalDate
+  с указанным количеством добавленных дней.
+
+- LocalDate plusMonths(long monthsToAdd) - Возвращает копию вызывающего объекта LocalDate
+  с указанным количеством добавленных месяцев.
+
+- LocalDate plusWeeks(long weeksToAdd) - Возвращает копию вызывающего объекта LocalDate
+  с указанным количеством добавленных недель.
+
+- LocalDate plusYears(long yearsToAdd) - Возвращает копию вызывающего объекта LocalDate
+  с указанным количеством добавленных лет.
+
+- <R> R	query(TemporalQuery<R> query) - Запрашивает эту дату, используя
+  указанный запрос.
+
+- ValueRange range(TemporalField field) - Получает диапазон допустимых
+  значений для указанного поля.
+
+- long toEpochDay() - Преобразует эту дату в день эпохи.
+
+- String toString() - Выводит эту дату в виде строки, например 2007-12-03.
+
+- Period until(ChronoLocalDate endDateExclusive) - Вычисляет период между
+  этой датой и другой датой как Period.
+
+- long until(Temporal endExclusive, TemporalUnit unit) - Вычисляет количество
+  времени до другой даты с точки зрения указанной единицы.
+
+- LocalDate with(TemporalAdjuster adjuster) - Возвращает скорректированную
+  копию этой даты.
+
+- LocalDate with(TemporalField field, long newValue) - Возвращает копию
+  этой даты с указанным полем, установленным на новое значение.
+
+- LocalDate withDayOfMonth(int dayOfMonth) - Возвращает копию вызывающего объекта
+  LocalDate с измененным днем месяца.
+
+- LocalDate withDayOfYear(int dayOfYear) - Возвращает копию вызывающего объекта
+  LocalDate с измененным днем года.
+
+- LocalDate withMonth(int month) - Возвращает копию вызывающего объекта LocalDate
+  с измененным месяцем года.
+
+- LocalDate withYear(int year) - Возвращает копию вызывающего объекта LocalDate
+  с измененным годом
+
+---------------------------------------------------------------------------------
+Более полную информацию см.
+https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html
+---------------------------------------------------------------------------------

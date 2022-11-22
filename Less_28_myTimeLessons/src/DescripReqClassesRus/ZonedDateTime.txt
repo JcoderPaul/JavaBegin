@@ -1,0 +1,309 @@
+******* Class ZonedDateTime - Класс ZonedDateTime *******
+
+public final class ZonedDateTime extends Object
+                                 implements Temporal,
+                                            ChronoZonedDateTime<LocalDate>,
+                                            Serializable
+
+Дата-время с часовым поясом в календарной системе ISO-8601, выглядит так:
+2007-12-03T10:15:30+01:00 "Europe/Paris".
+
+ZonedDateTime — это неизменное представление даты и времени с часовым поясом.
+Этот класс хранит все поля даты и времени с точностью до наносекунд и часовой
+пояс со смещением зоны, используемым для обработки неоднозначных локальных дат
+и времени.
+
+Например, значение «2 октября 2007 г., 13:45.30.123456789 +02:00 Europe/Paris»
+может быть сохранено в ZonedDateTime.
+
+Этот класс обрабатывает преобразование из локальной временной шкалы LocalDateTime
+в мгновенную временную шкалу Instant. Разница между двумя временными шкалами —
+это смещение от UTC/Greenwich, представленное ZoneOffset.
+
+Преобразование между двумя временными шкалами включает в себя вычисление смещения
+с использованием правил, доступ к которым осуществляется из ZoneId. Получить смещение
+для момента просто, так как для каждого момента существует ровно одно допустимое
+смещение. Напротив, получить смещение для локальной даты и времени непросто.
+
+Есть три случая:
+- Обычный, с одним действительным смещением. Для большей части года применяется
+  обычный случай, когда существует единственное допустимое смещение для локальной
+  даты и времени.
+- Зазор с нулевым допустимым смещением. Это когда часы перескакивают вперед, как
+  правило, из-за весеннего перехода на летнее время с «зимы» на «лето». В пробеле
+  есть локальные значения даты и времени без допустимого смещения.
+- Перекрытие с двумя действительными смещениями. Это когда часы обычно переводят
+  назад из-за смены осеннего летнего времени с «лета» на «зиму». В перекрытии есть
+  локальные значения даты и времени с двумя допустимыми смещениями.
+
+Любой метод, который прямо или неявно преобразует локальную дату-время в момент времени
+путем получения смещения, может быть сложным.
+
+Для промежутков общая стратегия заключается в том, что если локальная дата-время попадает
+в середину промежутка, то результирующая зонированная дата-время будет иметь локальную
+дату-время, сдвинутую вперед на длину промежутка, что приводит к дате-времени с более
+поздним смещении, обычно «летнее» время.
+
+Для перекрытий общая стратегия заключается в том, что если локальная дата-время попадает
+в середину перекрытия, то предыдущее смещение будет сохранено. Если предыдущее смещение
+отсутствует или предыдущее смещение недопустимо, то используется более раннее смещение,
+обычно «летнее» время.
+
+Два дополнительных метода, withEarlierOffsetAtOverlap() и withLaterOffsetAtOverlap(),
+помогают управлять случаем перекрытия.
+
+С точки зрения дизайна этот класс следует рассматривать в первую очередь как комбинацию
+LocalDateTime и ZoneId. ZoneOffset — важная, но второстепенная часть информации, используемая
+для обеспечения того, чтобы класс представлял момент, особенно во время перекрытия летнего
+времени.
+
+Для сравнения объектов ZonedDateTime следует использовать метод equals.
+
+Требования разработчиков к реализации:
+ZonedDateTime содержит состояние, эквивалентное трем отдельным объектам:
+- LocalDateTime,
+- ZoneId,
+- ZoneOffset.
+Смещение и локальная дата-время используются для определения момента, когда
+это необходимо. Идентификатор зоны используется для получения правил того,
+как и когда изменяется смещение. Смещение не может быть установлено свободно,
+так как зона определяет, какие смещения действительны.
+
+Данный класс является неизменяемым и потокобезопасным.
+
+******* МЕТОДЫ *******
+
+- boolean equals(Object obj) - Проверяет, равна ли эта дата-время
+  другой дате-времени.
+
+- String format(DateTimeFormatter formatter) - Форматирует эту
+  дату-время, используя указанный модуль форматирования.
+
+- static ZonedDateTime from(TemporalAccessor temporal) - Получает
+  экземпляр ZonedDateTime из временного объекта.
+
+- int get(TemporalField field) - Получает значение указанного поля
+  из этой даты и времени в виде целого числа.
+
+- int getDayOfMonth() - Получает поле дня месяца.
+
+- DayOfWeek	getDayOfWeek() - Получает поле дня недели, которое
+  является перечислением DayOfWeek.
+
+- int getDayOfYear() - Получает поле дня года.
+
+- int getHour() - Получает поле часов дня.
+
+- long getLong(TemporalField field) - Получает значение
+  указанного поля из этой даты и времени как long.
+
+- int getMinute() - Получает поле минут часа.
+
+- Month	getMonth() - Получает поле месяца года, используя
+  перечисление Month.
+
+- int getMonthValue() - Получает поле месяца года от 1 до 12.
+
+- int getNano() - Получает поле наносекунд.
+
+- ZoneOffset getOffset() - Получает смещение зоны, например "+01:00".
+
+- int getSecond() - Получает поле секунды минуты.
+
+- int getYear() - Получает поле года.
+
+- ZoneId getZone() - Получает часовой пояс, например "Европа/Париж".
+
+- int hashCode() - Хэш-код для этой даты и времени.
+
+- boolean isSupported(TemporalField field) - Проверяет, поддерживается ли указанное поле.
+
+- boolean isSupported(TemporalUnit unit) - Проверяет, поддерживается ли указанный модуль.
+
+- ZonedDateTime	minus(long amountToSubtract, TemporalUnit unit) - Возвращает копию
+  этой даты и времени с вычитанием указанной суммы.
+
+- ZonedDateTime	minus(TemporalAmount amountToSubtract) - Возвращает копию
+  этой даты и времени с вычитанием указанной суммы.
+
+- ZonedDateTime	minusDays(long days) - Возвращает копию этого ZonedDateTime
+  с указанным вычтенным количеством дней.
+
+- ZonedDateTime	minusHours(long hours) - Возвращает копию этого ZonedDateTime
+  с указанным вычтенным количеством часов.
+
+- ZonedDateTime	minusMinutes(long minutes) - Возвращает копию этого ZonedDateTime
+  с вычтенным указанным количеством минут.
+
+- ZonedDateTime	minusMonths(long months) - Возвращает копию этого ZonedDateTime
+  с вычтенным указанным количеством месяцев.
+
+- ZonedDateTime	minusNanos(long nanos) - Возвращает копию этого ZonedDateTime
+  с вычитанием указанного количества наносекунд.
+
+- ZonedDateTime	minusSeconds(long seconds) - Возвращает копию этого ZonedDateTime
+  с вычитанием указанного количества секунд.
+
+- ZonedDateTime	minusWeeks(long weeks) - Возвращает копию этого ZonedDateTime
+  с вычтенным указанным количеством недель.
+
+- ZonedDateTime	minusYears(long years) - Возвращает копию этого ZonedDateTime
+  с вычтенным указанным количеством лет.
+
+- static ZonedDateTime now() - Получает текущую дату и время по системным часам
+  в часовом поясе по умолчанию.
+
+- static ZonedDateTime now(Clock clock) - Получает текущую дату и время из
+  указанных часов - clock.
+
+- static ZonedDateTime now(ZoneId zone) - Получает текущую дату и время по
+  системным часам в указанном часовом поясе.
+
+- static ZonedDateTime of(int year,
+                          int month,
+                          int dayOfMonth,
+                          int hour,
+                          int minute,
+                          int second,
+                          int nanoOfSecond,
+                          ZoneId zone) - Получает экземпляр ZonedDateTime
+  из года, месяца, дня, часа, минуты, секунды, наносекунды и часового пояса.
+
+- static ZonedDateTime of(LocalDate date,
+                          LocalTime time,
+                          ZoneId zone) - Получает экземпляр ZonedDateTime
+  из локальной даты и времени.
+
+- static ZonedDateTime of(LocalDateTime localDateTime,
+                          ZoneId zone) - Получает экземпляр ZonedDateTime
+  из локальной даты и времени.
+
+- static ZonedDateTime ofInstant(Instant instant,
+                                 ZoneId zone) - Получает экземпляр ZonedDateTime из Instant.
+
+- static ZonedDateTime ofInstant(LocalDateTime localDateTime,
+                                 ZoneOffset offset,
+                                 ZoneId zone) - Получает экземпляр ZonedDateTime из
+  момента времени, сформированного путем объединения локальной даты и времени и смещения.
+
+- static ZonedDateTime ofLocal(LocalDateTime localDateTime,
+                               ZoneId zone,
+                               ZoneOffset preferredOffset) - Получает экземпляр ZonedDateTime
+  из локальной даты и времени, используя предпочтительное смещение, если это возможно.
+
+- static ZonedDateTime ofStrict(LocalDateTime localDateTime,
+                                ZoneOffset offset,
+                                ZoneId zone) - Получает экземпляр ZonedDateTime, строго
+  проверяющий комбинацию локальной даты и времени, смещения и идентификатора зоны.
+
+- static ZonedDateTime parse(CharSequence text) - Получает экземпляр ZonedDateTime из
+  текстовой строки, например 2007-12-03T10:15:30+01:00 [Europe/Paris].
+
+- static ZonedDateTime parse(CharSequence text, DateTimeFormatter formatter) - Получает
+  экземпляр ZonedDateTime из текстовой строки с использованием определенного средства
+  форматирования.
+
+- ZonedDateTime	plus(long amountToAdd, TemporalUnit unit) - Возвращает копию
+  этой даты и времени с добавленной указанной суммой.
+
+- ZonedDateTime	plus(TemporalAmount amountToAdd) - Возвращает копию этой даты
+  и времени с добавленной указанной суммой.
+
+- ZonedDateTime	plusDays(long days) - Возвращает копию этого ZonedDateTime
+  с указанным количеством добавленных дней.
+
+- ZonedDateTime	plusHours(long hours) - Возвращает копию этого ZonedDateTime
+  с указанным количеством добавленных часов.
+
+- ZonedDateTime	plusMinutes(long minutes) - Возвращает копию этого ZonedDateTime
+  с указанным количеством добавленных минут.
+
+- ZonedDateTime	plusMonths(long months) - Возвращает копию этого ZonedDateTime
+  с указанным количеством добавленных месяцев.
+
+- ZonedDateTime	plusNanos(long nanos) - Возвращает копию этого ZonedDateTime
+  с указанным количеством добавленных наносекунд.
+
+- ZonedDateTime	plusSeconds(long seconds) - Возвращает копию этого ZonedDateTime
+  с добавленным указанным количеством секунд.
+
+- ZonedDateTime	plusWeeks(long weeks) - Возвращает копию этого ZonedDateTime
+  с указанным количеством добавленных недель.
+
+- ZonedDateTime	plusYears(long years) - Возвращает копию этого ZonedDateTime
+  с указанным количеством добавленных лет.
+
+- <R> R query(TemporalQuery<R> query) - Запрашивает эту дату и время, используя
+  указанный запрос.
+
+- ValueRange range(TemporalField field) - Получает диапазон допустимых значений
+  для указанного поля.
+
+- LocalDate toLocalDate() - Получает часть LocalDate этой даты и времени.
+
+- LocalDateTime toLocalDateTime() - Получает часть LocalDateTime этой даты и времени.
+
+- LocalTime toLocalTime() - Получает часть LocalTime этой даты и времени.
+
+- OffsetDateTime toOffsetDateTime() - Преобразует эту дату-время в OffsetDateTime.
+
+- String toString() - Выводит дату-время в виде строки,
+  например 2007-12-03T10:15:30+01:00[Europe/Paris].
+
+- ZonedDateTime	truncatedTo(TemporalUnit unit) - Возвращает копию этого ZonedDateTime
+  с усеченным временем.
+
+- long until(Temporal endExclusive, TemporalUnit unit) - Вычисляет количество времени
+  до другой даты-времени с точки зрения указанной единицы.
+
+- ZonedDateTime	with(TemporalAdjuster adjuster) - Возвращает скорректированную копию
+  этой даты и времени.
+
+- ZonedDateTime	with(TemporalField field, long newValue) - Возвращает копию этой даты
+  и времени с указанным полем, установленным на новое значение.
+
+- ZonedDateTime	withDayOfMonth(int dayOfMonth) - Возвращает копию этого ZonedDateTime
+  с измененным днем месяца.
+
+- ZonedDateTime	withDayOfYear(int dayOfYear) - Возвращает копию этого ZonedDateTime
+  с измененным днем года.
+
+- ZonedDateTime	withEarlierOffsetAtOverlap() - Возвращает копию этой даты и времени,
+  изменяя смещение зоны на более раннее из двух допустимых смещений при перекрытии
+  локальной временной шкалы.
+
+- ZonedDateTime	withFixedOffsetZone() - Возвращает копию этой даты и времени с
+  идентификатором зоны, установленным на смещение.
+
+- ZonedDateTime	withHour(int hour) - Возвращает копию этого ZonedDateTime с
+  измененным часом дня.
+
+- ZonedDateTime	withLaterOffsetAtOverlap() - Возвращает копию этой даты и
+  времени, изменяя смещение зоны на более позднее из двух допустимых смещений
+  при перекрытии локальной временной шкалы.
+
+- ZonedDateTime	withMinute(int minute) - Возвращает копию этого ZonedDateTime
+  с измененными минутами часа.
+
+- ZonedDateTime	withMonth(int month) - Возвращает копию этого ZonedDateTime
+  с измененным месяцем года.
+
+- ZonedDateTime	withNano(int nanoOfSecond) - Возвращает копию этого ZonedDateTime
+  с измененным значением наносекунды.
+
+- ZonedDateTime	withSecond(int second) - Возвращает копию этого ZonedDateTime
+  с измененной секундой минуты.
+
+- ZonedDateTime	withYear(int year) - Возвращает копию этого ZonedDateTime
+  с измененным годом.
+
+- ZonedDateTime	withZoneSameInstant(ZoneId zone) - Возвращает копию этой даты
+  и времени с другим часовым поясом, сохраняя момент.
+
+- ZonedDateTime	withZoneSameLocal(ZoneId zone) - Возвращает копию этой даты
+  и времени с другим часовым поясом, сохраняя местную дату и время, если
+  это возможно.
+
+------------------------------------------------------------------------------------------
+Более подробно см. https://docs.oracle.com/javase/8/docs/api/java/time/ZonedDateTime.html
+------------------------------------------------------------------------------------------
